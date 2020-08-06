@@ -1,0 +1,33 @@
+<?php
+
+namespace App\{{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+{% for relationType in relationTypes %}
+use Illuminate\Database\Eloquent\Relations\{{ relationType|ucfirst }};
+{% endfor %}
+{% for relationUse in relationUses %}
+use App\{{ relationUse }};
+{% endfor %}
+
+class {{ table.name|singularStudly }} extends Model
+{
+{% if table.relations|length > 0 %}
+{% for relation in table.relations %}
+    const {{ relation.name|upper }}_RELATION = "{{ relation.name }}";
+{% endfor %}
+
+{% endif %}
+    protected $fillable = [
+{% for field in table.fields %}
+        '{{ field.name }}',
+{% endfor %}
+    ];
+{% for relation in table.relations %}
+
+    public function {{ relation.name }}(): {{ relation.type|ucfirst }}
+    {
+        return $this->{{ relation.type }}({{ relation.name|singularStudly }}::class);
+    }
+{% endfor %}
+}
