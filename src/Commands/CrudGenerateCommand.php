@@ -28,7 +28,7 @@ class CrudGenerateCommand extends Command
     protected $description = 'Generate API CRUD.';
     protected $tableRepository;
 
-    protected function __construct(TableRepository $tableRepository)
+    public function __construct(TableRepository $tableRepository)
     {
         parent::__construct();
 
