@@ -1,6 +1,6 @@
 <?php
 
-use LaravelApiCrudGenerator\CrudGenerateCommand;
+use LaravelApiCrudGenerator\Commands\CrudGenerateCommand;
 
 require __DIR__.'/vendor/autoload.php';
 

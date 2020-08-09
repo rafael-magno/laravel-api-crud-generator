@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelApiCrudGenerator;
+namespace LaravelApiCrudGenerator\Utils;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

@@ -3,7 +3,7 @@
 namespace LaravelApiCrudGenerator\Generators;
 
 use LaravelApiCrudGenerator\Entities\Table;
-use LaravelApiCrudGenerator\Str;
+use LaravelApiCrudGenerator\Utils\Str;
 
 class UpdateActionGenerator extends Generator
 {

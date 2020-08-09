@@ -3,8 +3,8 @@
 namespace LaravelApiCrudGenerator\Generators;
 
 use LaravelApiCrudGenerator\Entities\Table;
-use LaravelApiCrudGenerator\Str;
-use LaravelApiCrudGenerator\TwigExtension;
+use LaravelApiCrudGenerator\Utils\Str;
+use LaravelApiCrudGenerator\Utils\TwigExtension;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 

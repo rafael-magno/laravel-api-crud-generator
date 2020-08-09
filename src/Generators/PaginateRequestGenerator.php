@@ -2,7 +2,7 @@
 
 namespace LaravelApiCrudGenerator\Generators;
 
-use LaravelApiCrudGenerator\Str;
+use LaravelApiCrudGenerator\Utils\Str;
 
 class PaginateRequestGenerator extends Generator
 {
