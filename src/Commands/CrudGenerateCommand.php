@@ -20,15 +20,20 @@ use LaravelApiCrudGenerator\Generators\RepositoryGenerator;
 use LaravelApiCrudGenerator\Generators\RoutesGenerator;
 use LaravelApiCrudGenerator\Generators\SaveRequestGenerator;
 use LaravelApiCrudGenerator\Generators\UpdateActionGenerator;
+use LaravelApiCrudGenerator\Repositories\TableRepository;
 
 class CrudGenerateCommand extends Command
 {
-    protected $name = '
-    :crud';
+    protected $name = 'make:crud';
     protected $description = 'Generate API CRUD.';
+    protected $tableRepository;
 
-    protected function configure()
+    protected function __construct(TableRepository $tableRepository)
     {
+        parent::__construct();
+
+        $this->tableRepository = $tableRepository;
+
         Config::set('DB_CONNECTION', 'sqlite');
         Config::set('DB_DATABASE', ':memory:');
 
@@ -37,7 +42,7 @@ class CrudGenerateCommand extends Command
 
     public function handle()
     {
-        $tables = $this->getTables();
+        $tables = $this->tableRepository->getEntities();
 
         FormRequestGenerator::generate();
         PaginateRequestGenerator::generate();
@@ -60,7 +65,7 @@ class CrudGenerateCommand extends Command
             $messageAddRoutes .= "Route::group([], base_path('$pathRoutes/routes.php'));\n";
         }
         
-        $this->info("CRUD created successfully.\n\n Remove the namespace route.\n" . $messageAddRoutes);
+        //$this->info("CRUD created successfully.\n\n Remove the namespace route.\n" . $messageAddRoutes);
     }
 
     private function getTables(): array
