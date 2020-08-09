@@ -34,10 +34,11 @@ class CrudGenerateCommand extends Command
 
         $this->tableRepository = $tableRepository;
 
-        /*Config::set('DB_CONNECTION', 'sqlite');
-        Config::set('DB_DATABASE', ':memory:');
+        Config::set('database.connections.sqlite.database', ':memory:');
+        Config::set('database.default', 'sqlite');
+        Config::clearResolvedInstances();
 
-        Artisan::call('migrate');*/
+        Artisan::call('migrate');
     }
 
     public function handle()
