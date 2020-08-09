@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelApiCrudGenerator\Utils\Providers;
+namespace LaravelApiCrudGenerator\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
