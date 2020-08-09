@@ -1,0 +1,78 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Prettus\Repository\Eloquent\BaseRepository;
+use ReflectionClass;
+use ReflectionMethod;
+
+abstract class Repository extends BaseRepository
+{
+    public function create(array $data)
+    {
+        $entity = null;
+
+        DB::transaction(function() use ($data, &$entity) {
+            $entity = parent::create($data);
+            $this->syncRelations($entity, $data);
+        });
+
+        return $entity;
+    }
+
+    public function update(array $data, $id)
+    {
+        $entity = null;
+
+        DB::transaction(function() use ($data, $id, &$entity) {
+            $entity = parent::update($data, $id);
+            $this->syncRelations($entity, $data);
+        });
+
+        return $entity;
+    }
+
+    public function updateOrCreate(array $attributes, array $values = [])
+    {
+        $entity = null;
+
+        DB::transaction(function() use ($attributes, $values, &$entity) {
+            $entity = parent::updateOrCreate($attributes, $values);
+            $this->syncRelations($entity, $values);
+        });
+
+        return $entity;
+    }
+
+    private function syncRelations(Model $entity, array $data): void
+    {
+        foreach ($this->getDefinedManyRelations() as $relation) {
+            $keyData = $relation . '_id';
+            if (isset($data[$keyData])) {
+                $entity->$relation()->sync($data[$keyData]);
+            }
+        }
+    }
+
+    private function getDefinedManyRelations(): array
+    {
+        $class = new ReflectionClass($this->model());
+        $methods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
+        $methods = array_filter($methods, function($method) {
+            return $method->hasReturnType()
+                && in_array($method->getReturnType()->getName(), $this->getManyTypeRelations());
+        });
+
+        return array_map(fn($method) => $method->getName(), $methods);
+    }
+
+    private function getManyTypeRelations(): array
+    {
+        $namespaceRelations = "Illuminate\\Database\\Eloquent\\Relations\\";
+        $manyTypeRelations = array_map(fn($manyMethod) => $namespaceRelations . ucfirst($manyMethod), Model::$manyMethods);
+
+        return $manyTypeRelations;
+    }
+}

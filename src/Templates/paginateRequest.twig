@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespaceFormRequest }}\FormRequest;
+
+class PaginateRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'per_page' => 'required|numeric|max:1000',
+        ];
+    }
+}

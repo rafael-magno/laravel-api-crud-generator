@@ -1,13 +1,13 @@
 <?php
 
-namespace App\{{ namespace }};
+namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Model;
 {% for relationType in relationTypes %}
 use Illuminate\Database\Eloquent\Relations\{{ relationType|ucfirst }};
 {% endfor %}
 {% for relationUse in relationUses %}
-use App\{{ relationUse }};
+use {{ relationUse }};
 {% endfor %}
 
 class {{ table.name|singularStudly }} extends Model

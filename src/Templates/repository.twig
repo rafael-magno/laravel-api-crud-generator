@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespaceBaseRepository }}\Repository;
+use Prettus\Repository\Criteria\RequestCriteria;
+use {{ namespaceModel }}\{{ table.name|singularStudly }};
+
+class {{ table.name|singularStudly }}Repository extends Repository
+{
+    public function model()
+    {
+        return {{ table.name|singularStudly }}::class;
+    }
+
+    public function boot()
+    {
+        $this->pushCriteria(app(RequestCriteria::class));
+    }
+}

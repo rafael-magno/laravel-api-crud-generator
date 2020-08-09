@@ -3,12 +3,14 @@
 namespace LaravelApiCrudGenerator\Generators;
 
 use LaravelApiCrudGenerator\Entities\Table;
+use LaravelApiCrudGenerator\Str;
 
 class ModelGenerator extends Generator
 {
     public function __construct(Table $table)
     {
-        parent::__construct($table, self::TYPE_MODEL);
+        $fileName = Str::singularStudly($table->name) . '.php';
+        parent::__construct(self::TYPE_MODEL, $fileName, $table);
     }
 
     public function handle(): bool
@@ -16,16 +18,16 @@ class ModelGenerator extends Generator
         $relationTypes = array_map(fn($relation) => $relation->type, $this->table->relations);
         $relationTables = array_map(fn($relation) => $relation->table, $this->table->relations);
         $relationUses = array_map(function($tableName) {
-            $fileName = $this->getFileName(self::TYPE_MODEL, $tableName);
-            $fileName = substr($fileName, 0, -4);
-            return str_replace('/', '\\', $fileName);
+            $fullFileName = self::getPath(self::TYPE_MODEL, $tableName);
+            $fullFileName .= '/' . Str::singularStudly($tableName);
+            return Str::pathToNamespace($fullFileName);
         }, $relationTables);
         
         return $this->saveFile([
             'table' => $this->table,
             'relationTypes' => array_unique($relationTypes),
             'relationTables' => array_unique($relationTables),
-            'namespace' => str_replace('/', '\\', dirname($this->fileName)),
+            'namespace' => Str::pathToNamespace($this->path),
             'relationUses' => $relationUses,
         ]);
     }

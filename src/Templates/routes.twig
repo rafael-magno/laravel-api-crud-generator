@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Support\Facades\Route;
+use {{ namespaceCreateAction }}\Create{{ table.name|singularStudly }}Action;
+use {{ namespaceGetAction }}\Get{{ table.name|singularStudly }}Action;
+use {{ namespaceListAction }}\List{{ table.name|studly }}Action;
+use {{ namespaceUpdateAction }}\Update{{ table.name|singularStudly }}Action;
+use {{ namespaceDeleteAction }}\Delete{{ table.name|singularStudly }}Action;
+
+Route::post('/{{ table.name|singularKebab }}', Create{{ table.name|singularStudly }}Action::class);
+Route::get('/{{ table.name|singularKebab }}/{id}', Get{{ table.name|singularStudly }}Action::class);
+Route::get('/{{ table.name|singularKebab }}', List{{ table.name|studly }}Action::class);
+Route::put('/{{ table.name|singularKebab }}/{id}', Update{{ table.name|singularStudly }}Action::class);
+Route::delete('/{{ table.name|singularKebab }}/{id}', Delete{{ table.name|singularStudly }}Action::class);

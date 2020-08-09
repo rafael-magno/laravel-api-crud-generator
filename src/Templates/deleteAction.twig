@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespaceRepository }}\{{ table.name|singularStudly }}Repository;
+
+class Delete{{ table.name|singularStudly }}Action
+{
+    public function __invoke(int $id, {{ table.name|singularStudly }}Repository $repository)
+    {
+        return $repository->delete($id);
+    }
+}

@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespaceRepository }}\{{ table.name|singularStudly }}Repository;
+use {{ namespaceSaveRequest }}\Save{{ table.name|singularStudly }}Request;
+
+class Update{{ table.name|singularStudly }}Action
+{
+    public function __invoke(
+        {{ table.name|singularStudly }}Repository $repository,
+        Save{{ table.name|singularStudly }}Request $request,
+        int $id
+    ) {
+        return $repository->update(
+            $request->all(),
+            $id
+        );
+    }
+}

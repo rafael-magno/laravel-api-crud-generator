@@ -6,7 +6,18 @@ use Illuminate\Console\Command;
 use LaravelApiCrudGenerator\Entities\Field;
 use LaravelApiCrudGenerator\Entities\Relation;
 use LaravelApiCrudGenerator\Entities\Table;
+use LaravelApiCrudGenerator\Generators\BaseRepositoryGenerator;
+use LaravelApiCrudGenerator\Generators\CreateActionGenerator;
+use LaravelApiCrudGenerator\Generators\DeleteActionGenerator;
+use LaravelApiCrudGenerator\Generators\FormRequestGenerator;
+use LaravelApiCrudGenerator\Generators\GetActionGenerator;
+use LaravelApiCrudGenerator\Generators\ListActionGenerator;
 use LaravelApiCrudGenerator\Generators\ModelGenerator;
+use LaravelApiCrudGenerator\Generators\PaginateRequestGenerator;
+use LaravelApiCrudGenerator\Generators\RepositoryGenerator;
+use LaravelApiCrudGenerator\Generators\RoutesGenerator;
+use LaravelApiCrudGenerator\Generators\SaveRequestGenerator;
+use LaravelApiCrudGenerator\Generators\UpdateActionGenerator;
 
 class CrudGenerateCommand extends Command
 {
@@ -17,21 +28,28 @@ class CrudGenerateCommand extends Command
     {
         $tables = $this->getTables();
 
-        // FormRequestGenerator
-        // PaginateRequestGenerator
+        FormRequestGenerator::generate();
+        PaginateRequestGenerator::generate();
+        BaseRepositoryGenerator::generate();
+
+        $messageAddRoutes = "Add the following routes: \n\n";
+
         foreach ($tables as $table) {
-            // ModelGenerator
             ModelGenerator::generate($table);
-            // RepositoryGenerator
-            // SaveRequestGenerator
-            // ListRequestGenerator
-            // CreateActionGenerator
-            // GetActionGenerator
-            // ListActionGenerator
-            // UpdateActionGenerator
-            // DeleteActionGenerator
+            RepositoryGenerator::generate($table);
+            SaveRequestGenerator::generate($table);
+            CreateActionGenerator::generate($table);
+            GetActionGenerator::generate($table);
+            ListActionGenerator::generate($table);
+            UpdateActionGenerator::generate($table);
+            DeleteActionGenerator::generate($table);
+            RoutesGenerator::generate($table);
+
+            $pathRoutes = RoutesGenerator::getPath(RoutesGenerator::TYPE_ROUTES, $table->name);
+            $messageAddRoutes .= "Route::group([], base_path('$pathRoutes/routes.php'));\n";
         }
-        //$this->info("CRUD created successfully.");
+        
+        $this->info("CRUD created successfully.\n\n Remove the namespace route.\n" . $messageAddRoutes);
     }
 
     private function getTables(): array

@@ -1,0 +1,21 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespaceFormRequest }}\FormRequest;
+
+class Save{{ table.name|singularStudly }}Request extends FormRequest
+{
+    public function rules(): array
+    {
+{% if getId %}
+        $id = $this->get('id');
+
+{% endif %}
+        return [
+{% for name,rules in fieldRules %}
+            "{{ name }}" => "{{ rules|join('|') }}",
+{% endfor %}
+        ];
+    }
+}

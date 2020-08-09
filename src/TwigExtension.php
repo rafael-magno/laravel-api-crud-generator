@@ -11,6 +11,8 @@ class TwigExtension extends AbstractExtension
     {
         return [
             new TwigFilter('singularStudly', '\LaravelApiCrudGenerator\Str::singularStudly'),
+            new TwigFilter('singularKebab', '\LaravelApiCrudGenerator\Str::singularKebab'),
+            new TwigFilter('studly', '\LaravelApiCrudGenerator\Str::studly'),
             new TwigFilter('ucfirst', 'ucfirst'),
         ];
     }
