@@ -11,5 +11,12 @@
         "psr-4": {
             "LaravelApiCrudGenerator\\": "src/"
         }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "LaravelApiCrudGenerator\\Providers\\CrudGeneratorServiceProvider"
+        ]
+      }
     }
 }
