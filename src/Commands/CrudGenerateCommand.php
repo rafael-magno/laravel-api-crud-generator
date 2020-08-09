@@ -38,7 +38,7 @@ class CrudGenerateCommand extends Command
         Config::set('database.default', 'sqlite');
         Config::clearResolvedInstances();
 
-        Artisan::call('migrate');
+        //Artisan::call('migrate');
     }
 
     public function handle()
