@@ -3,6 +3,8 @@
 namespace LaravelApiCrudGenerator;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use LaravelApiCrudGenerator\Entities\Field;
 use LaravelApiCrudGenerator\Entities\Relation;
 use LaravelApiCrudGenerator\Entities\Table;
@@ -21,8 +23,17 @@ use LaravelApiCrudGenerator\Generators\UpdateActionGenerator;
 
 class CrudGenerateCommand extends Command
 {
-    protected $name = 'make:crud';
+    protected $name = '
+    :crud';
     protected $description = 'Generate API CRUD.';
+
+    protected function configure()
+    {
+        Config::set('DB_CONNECTION', 'sqlite');
+        Config::set('DB_DATABASE', ':memory:');
+
+        Artisan::call('migrate');
+    }
 
     public function handle()
     {
