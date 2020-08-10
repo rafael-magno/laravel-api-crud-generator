@@ -22,6 +22,13 @@ class Str extends SupportStr
         );
     }
 
+    public static function singularCamel($stringSnakeCase)
+    {
+        return self::camel(
+            self::singularStudly($stringSnakeCase)
+        );
+    }
+
     public static function pathToNamespace($path)
     {
         $parts = explode('/', $path);
