@@ -40,12 +40,12 @@ abstract class Generator
         $this->twig = new Environment($loader);
         $this->twig->addExtension(new TwigExtension());
     }
-     
+
     public static function generate(?Table $table = null): bool
     {
         $class = static::class;
         $instance = $table ? new $class($table) : new $class();
-        
+
         return $instance->handle();
     }
 
@@ -59,18 +59,19 @@ abstract class Generator
 
     protected function saveFile(array $data): bool
     {
-        $fullFileName = $this->path . '/' .$this->fileName;
+        $path = __DIR__ . "/../../../../../" . $this->path;
+        $fullFileName = $path . '/' .$this->fileName;
 
         if (file_exists($fullFileName)) {
             return false;
         }
 
-        if (!is_dir($this->path)) {
-            mkdir($this->path, 0777, true);
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
         }
 
         $fileContent = $this->twig->render($this->type . '.twig', $data);
-        
+
         $fileWrited = file_put_contents($fullFileName, $fileContent);
 
         return $fileWrited !== false;
