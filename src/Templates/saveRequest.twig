@@ -9,7 +9,7 @@ class Save{{ table.name|singularStudly }}Request extends FormRequest
     public function rules(): array
     {
 {% if getId %}
-        $id = $this->get('id');
+        $id = $this->route('id');
 
 {% endif %}
         return [

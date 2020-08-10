@@ -9,7 +9,7 @@ class ListActionGenerator extends Generator
 {
     public function __construct(Table $table)
     {
-        $fileName = 'List' . Str::singularStudly($table->name) . 'Action.php';
+        $fileName = 'List' . Str::studly($table->name) . 'Action.php';
         parent::__construct(self::TYPE_LIST_ACTION, $fileName, $table);
     }
 
