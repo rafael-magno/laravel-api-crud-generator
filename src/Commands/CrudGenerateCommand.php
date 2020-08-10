@@ -31,18 +31,23 @@ class CrudGenerateCommand extends Command
 
         $this->tableRepository = $tableRepository;
 
+    }
+    
+    public function handle()
+    {
+        $database = config('database.connections.sqlite.database');
+        $default = config('database.default');
+        
         Config::set('database.connections.sqlite.database', ':memory:');
         Config::set('database.default', 'sqlite');
         Config::clearResolvedInstances();
-    }
-
-    public function handle()
-    {
         Artisan::call('migrate');
         
         $tables = $this->tableRepository->getEntities();
 
-        Artisan::call('config:clear');
+        Config::set('database.connections.sqlite.database', $database);
+        Config::set('database.default', $default);
+        Config::clearResolvedInstances();
 
         FormRequestGenerator::generate();
         PaginateRequestGenerator::generate();
