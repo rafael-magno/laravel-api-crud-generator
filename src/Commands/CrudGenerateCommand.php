@@ -35,19 +35,14 @@ class CrudGenerateCommand extends Command
     
     public function handle()
     {
-        $database = config('database.connections.sqlite.database');
         $default = config('database.default');
-        
-        Config::set('database.connections.sqlite.database', ':memory:');
-        Config::set('database.default', 'sqlite');
-        Config::clearResolvedInstances();
+        $database = config('database.connections.sqlite.database');
+        $this->configDatabase('sqlite', ':memory:');
         Artisan::call('migrate');
         
         $tables = $this->tableRepository->getEntities();
-
-        Config::set('database.connections.sqlite.database', $database);
-        Config::set('database.default', $default);
-        Config::clearResolvedInstances();
+        
+        $this->configDatabase($default, $database);
 
         FormRequestGenerator::generate();
         PaginateRequestGenerator::generate();
@@ -71,5 +66,12 @@ class CrudGenerateCommand extends Command
         }
 
         $this->info("CRUD created successfully.\n\n Remove the namespace route.\n" . $messageAddRoutes);
+    }
+
+    private function configDatabase(string $default, string $database): void
+    {
+        Config::set('database.connections.sqlite.database', $database);
+        Config::set('database.default', $default);
+        Config::clearResolvedInstances();
     }
 }
