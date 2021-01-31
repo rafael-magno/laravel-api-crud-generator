@@ -16,7 +16,7 @@ class CrudGeneratorServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/config/crudGenerator.php' => config_path('crudGenerator.php')
         ], 'crud-generator');
         
-        $this->mergeConfigFrom(__DIR__ . '/../resources/config/crudGenerator.php', 'crud-generator');
+        $this->mergeConfigFrom(__DIR__ . '/../resources/config/crudGenerator.php', 'crudGenerator');
     }
 
     public function register()
