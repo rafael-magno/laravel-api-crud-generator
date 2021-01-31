@@ -14,13 +14,13 @@ class CrudGeneratorServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../resources/config/crudGenerator.php' => config_path('crudGenerator.php')
-        ]);
-
-        $this->mergeConfigFrom(__DIR__ . '/../resources/config/crudGenerator.php', 'crudGenerator');
+        ], 'crud-generator');
     }
 
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__ . '/../resources/config/crudGenerator.php', 'crud-generator');
+
         $this->commands('LaravelApiCrudGenerator\Commands\CrudGenerateCommand');
     }
 
