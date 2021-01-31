@@ -12,7 +12,9 @@ Laaravel >= 7
 
 Add this repository:
 
-`composer config repositories.rafael-magno/laravel-api-crud-generator git https://github.com/rafael-magno/laravel-api-crud-generator`
+```
+composer config repositories.rafael-magno/laravel-api-crud-generator git https://github.com/rafael-magno/laravel-api-crud-generator
+```
 
 Install package:
 
