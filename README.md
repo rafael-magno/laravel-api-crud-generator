@@ -18,7 +18,7 @@ composer config repositories.rafael-magno/laravel-api-crud-generator git https:/
 
 Install package:
 
-`composer require rafael-magno/laravel-api-crud-generator --dev`
+`composer require rafael-magno/laravel-api-crud-generator`
 
 ## Usage
 
