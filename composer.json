@@ -3,7 +3,7 @@
     "type": "library",
     "description": "The Laravel API CRUD Generator.",
     "require": {
-        "php": "^7.4.0",
+        "php": "^7.4.0|^8.0",
         "prettus/l5-repository": "^2.6",
         "twig/twig": "^3.0"
     },
